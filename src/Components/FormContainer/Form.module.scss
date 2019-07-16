@@ -20,6 +20,14 @@
 			padding: 8px;
 		}
 	}
+	.error{
+		padding: 1% 5%;
+		margin: 2% auto;
+		width: 80%;
+		color:$redOrange;
+		background: rgba($gray,0.4);
+
+	}
 	form {
 		display: flex;
 		flex-direction: column;

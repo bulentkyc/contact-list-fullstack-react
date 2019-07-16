@@ -7,7 +7,6 @@ class Register extends React.Component {
 		failed: false,
 		errors: []
 	}
-
 	nameRef = React.createRef();
 	emailRef = React.createRef();
 	passwordRef = React.createRef();
@@ -18,19 +17,19 @@ class Register extends React.Component {
 		let isValid= true;
 		const emailReg= /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 		if(obj.name.trim().length < 2){
-			errors.push("Please enter your Full name");
+			errors.push({msg: "Please enter your Full name"});
 			isValid= false;
 		}
 		if(!emailReg.test(obj.email)){
-			errors.push("Please enter your email address");
+			errors.push({msg: "Please enter your email address"});
 			isValid=false;
 		}
 		if(obj.password.trim().length < 6){
-			errors.push("Your password should be more than 6 letter");
+			errors.push({msg: "Your password should be more than 6 letter"});
 			isValid=false;
 		}
 		if(obj.password !== obj.password2 ){
-			errors.push("Your password should match the confirm password");
+			errors.push({msg: "Your password should match the confirm password"});
 			isValid=false;
 		}
 		this.setState({errors,failed: true});
@@ -42,7 +41,7 @@ class Register extends React.Component {
 			name : this.nameRef.current.value,
 			email : this.emailRef.current.value,
 			password : this.passwordRef.current.value,
-			password2 : this.paswordConfirmRef.current.value,
+			password2 : this.paswordConfirmRef.current.value
 		}
 		if(this.validation(obj)){
 			axios.post('/newUser',{...obj})
@@ -58,7 +57,7 @@ class Register extends React.Component {
 					this.setState({errors: response.data.errors});
 				}
 				}).catch( err =>{
-					this.setState({errors: ["There was a problem with server, Please try again later."]});
+					this.setState({errors: [{msg: "There was a problem with server, Please try again later."}]});
 				})
 		}else{
 			this.passwordRef.current.value= "";
@@ -66,11 +65,13 @@ class Register extends React.Component {
 		}
 	};
 	render() {
+		console.log(this.state.errors);
 		return (
 			<section className={Classes.containerForm}>
 				<h1>
 					<img src={require('../../../assets/img/user-plus-solid.svg')} alt="user-img" />Register
 				</h1>
+				{this.state.errors.map((error, index) => <p className={Classes.error} key={index}>{error.msg}</p>)}
 				<form onSubmit={this.addNewUser}>
 					<label>Name</label>
 					<input type="text" placeholder="Enter Name" ref={this.nameRef} />
@@ -79,7 +80,7 @@ class Register extends React.Component {
 					<label>Password</label>
 					<input type="password" placeholder="Create Password" ref={this.passwordRef} />
 					<label>Confirm Password</label>
-					<input type="password" placeholder="Confirm Password" ref={this.paswwordConfirmRef} />
+					<input type="password" placeholder="Confirm Password" ref={this.paswordConfirmRef} />
 					<input type="submit" value="Register" />
 				</form>
 				<p>
@@ -88,29 +89,6 @@ class Register extends React.Component {
 			</section>
 		);
 	}
-	render(){
-	return (
-		<section className={Classes.containerForm}>
-			<h1>
-				<img src={require('../../../assets/img/user-plus-solid.svg')} alt="user-img" />Register
-			</h1>
-			<form onSubmit={this.addNewUser}>
-				<label>Name</label>
-				<input type="text" placeholder="Enter Name" ref={this.nameRef}  />
-				<label>Email</label>
-				<input type="email" placeholder="Enter Email" ref={this.emailRef}/>
-				<label>Password</label>
-				<input type="password" placeholder="Create Password" ref={this.passwordRef}/>
-				<label>Confirm</label>
-				<input type="password" placeholder="Confirm Password" ref={this.paswordConfirmRef}/>
-				<input type="submit" value="Register" />
-			</form>
-			<p>
-				Have An Account? <Link to="/login">Login</Link>
-			</p>
-		</section>
-	);
-};
 }
 
 export default Register;

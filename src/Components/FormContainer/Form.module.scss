@@ -3,16 +3,18 @@
 .containerForm {
 	color: $black;
 	font-size: 18px;
-	width: 25%;
+	width: 35%;
 	min-width: 500px;
-	margin: 10% auto;
-	border: 1px solid $gray;
+	margin: 5% auto;
+	padding: 2%;
+	box-shadow: 0 0 5px $gray;
 	font-family: Arial, Helvetica, sans-serif;
 	h1 {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		font-size: 35px;
+		margin: 0;
 		img {
 			width: 60px;
 			padding: 8px;
@@ -21,11 +23,11 @@
 	form {
 		display: flex;
 		flex-direction: column;
-		padding: 5% 15%;
+		padding: 5%;
 		input {
-			padding: 8px;
+			padding: 10px;
 			margin: 8px;
-			font-size: 14px;
+			font-size: 16px;
 			&[type='submit'] {
 				width: 40%;
 				margin: 8px auto;
@@ -42,6 +44,7 @@
 	}
 	p {
 		text-align: center;
+		margin: 0;
 		a {
 			color: $redOrange;
 			text-decoration: none;
@@ -49,9 +52,16 @@
 	}
 }
 
-@media screen and (max-width: 500px){
-	.containerForm{
-		width: 100%;
+@media (max-width: 800px) {
+	.containerForm {
+		width: 90%;
 		min-width: unset;
+		font-size: 16px;
+		h1 {
+			font-size: 22px;
+			img {
+				width: 40px;
+			}
+		}
 	}
 }

@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Classes from '../Form.module.scss';
+import axios from 'axios';
 
 class Register extends React.Component {
+	state={
+		failed: false
+	}
 	nameRef = React.createRef();
 	emailRef = React.createRef();
 	passwordRef = React.createRef();
@@ -11,20 +15,19 @@ class Register extends React.Component {
 		e.preventDefault();
 		if(this.passwordRef.current.value === this.paswordConfirmRef.current.value){
 			let obj = {
-				username : this.nameRef.current.value,
+				name : this.nameRef.current.value,
 				email : this.emailRef.current.value,
 				password : this.passwordRef.current.value,
+				password2 : this.paswordConfirmRef.current.value,
 			}
-			window.location.pathname = "/login"
-			fetch('/newUser',{
-				method: 'POST',
-				body: JSON.stringify({...obj}),
-				headers: {"Content-Type": "application/json"}
-			  })
-			  .then((response)=> response.json())
-			  .then(body =>{
-				if(body === true){
-					window.location.pathname = "/login"
+			axios.post('/newUser',{...obj})
+			  .then(response =>{
+				  console.log(response)
+				if(response.data.status === "success"){
+					this.setState({failed : false});
+					// window.location.pathname = "/login"
+				}else{
+					this.setState({failed : true});
 				}
 				}).catch( err =>{
 					console.log(err);
@@ -32,7 +35,6 @@ class Register extends React.Component {
 		}
 	}
 	render(){
-
 	return (
 		<section className={Classes.containerForm}>
 			<h1>

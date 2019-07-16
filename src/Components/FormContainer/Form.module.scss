@@ -4,6 +4,7 @@
 	color: $black;
 	font-size: 18px;
 	width: 25%;
+	min-width: 500px;
 	margin: 10% auto;
 	border: 1px solid $gray;
 	font-family: Arial, Helvetica, sans-serif;
@@ -45,5 +46,12 @@
 			color: $redOrange;
 			text-decoration: none;
 		}
+	}
+}
+
+@media screen and (max-width: 500px){
+	.containerForm{
+		width: 100%;
+		min-width: unset;
 	}
 }

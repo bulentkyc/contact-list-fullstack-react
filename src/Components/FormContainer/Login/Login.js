@@ -8,7 +8,7 @@ const Login = () => {
 			<h1>
 				<img src={require('../../../assets/img/user-solid.svg')} alt="user-img" />Login
 			</h1>
-			<form action='/loginAuth' method='POST' enctype='multipart/form-data'>
+			<form>
 				<label>Email</label>
 				<input type="email" placeholder="Enter Email" />
 				<label>Password</label>

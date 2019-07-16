@@ -10,7 +10,6 @@ class DashBoard extends React.Component{
                     <input type="text" name="email"/>
                     <input type="file" name="file"/>
                     <button type="submit">Submit</button>
-                    hello
                 </form>
             </section>
         );

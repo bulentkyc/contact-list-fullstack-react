@@ -1,0 +1,49 @@
+@import '../../assets/Scss/variables.scss';
+
+.containerForm {
+	color: $black;
+	font-size: 18px;
+	width: 25%;
+	margin: 10% auto;
+	border: 1px solid $gray;
+	font-family: Arial, Helvetica, sans-serif;
+	h1 {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 35px;
+		img {
+			width: 60px;
+			padding: 8px;
+		}
+	}
+	form {
+		display: flex;
+		flex-direction: column;
+		padding: 5% 15%;
+		input {
+			padding: 8px;
+			margin: 8px;
+			font-size: 14px;
+			&[type='submit'] {
+				width: 40%;
+				margin: 8px auto;
+				background-color: $redOrange;
+				color: $white;
+				border: none;
+				font-size: 16px;
+				border-radius: 5px;
+			}
+		}
+		label {
+			padding: 8px;
+		}
+	}
+	p {
+		text-align: center;
+		a {
+			color: $redOrange;
+			text-decoration: none;
+		}
+	}
+}

@@ -4,6 +4,7 @@
 	color: $black;
 	font-size: 18px;
 	width: 35%;
+	min-width: 500px;
 	margin: 5% auto;
 	padding: 2%;
 	box-shadow: 0 0 5px $gray;
@@ -54,6 +55,7 @@
 @media (max-width: 800px) {
 	.containerForm {
 		width: 90%;
+		min-width: unset;
 		font-size: 16px;
 		h1 {
 			font-size: 22px;

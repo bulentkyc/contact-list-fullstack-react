@@ -6,10 +6,10 @@ class Register extends React.Component {
 	nameRef = React.createRef();
 	emailRef = React.createRef();
 	passwordRef = React.createRef();
-	paswwordConfirmRef = React.createRef();
+	paswordConfirmRef = React.createRef();
 	addNewUser = (e) =>{
 		e.preventDefault();
-		if(this.passwordRef.current.value === this.paswwordConfirmRef.current.value){
+		if(this.passwordRef.current.value === this.paswordConfirmRef.current.value){
 			let obj = {
 				username : this.nameRef.current.value,
 				email : this.emailRef.current.value,
@@ -46,7 +46,7 @@ class Register extends React.Component {
 				<label>Password</label>
 				<input type="password" placeholder="Create Password" ref={this.passwordRef}/>
 				<label>Confirm</label>
-				<input type="password" placeholder="Confirm Password" ref={this.paswwordConfirmRef}/>
+				<input type="password" placeholder="Confirm Password" ref={this.paswordConfirmRef}/>
 				<input type="submit" value="Register" />
 			</form>
 			<p>

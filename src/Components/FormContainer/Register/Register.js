@@ -3,65 +3,67 @@ import { Link } from 'react-router-dom';
 import Classes from '../Form.module.scss';
 import axios from 'axios';
 class Register extends React.Component {
-	state={
+	state = {
 		failed: false,
 		errors: []
-	}
+	};
 	nameRef = React.createRef();
 	emailRef = React.createRef();
 	passwordRef = React.createRef();
-	paswordConfirmRef = React.createRef();
+	passwordConfirmRef = React.createRef();
 
-	validation(obj){
+	validation(obj) {
 		let errors = [];
-		let isValid= true;
-		const emailReg= /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-		if(obj.name.trim().length < 2){
-			errors.push({msg: "Please enter your Full name"});
-			isValid= false;
+		let isValid = true;
+		const emailReg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+		if (obj.name.trim().length < 2) {
+			errors.push({ msg: 'Please enter your Full name' });
+			isValid = false;
 		}
-		if(!emailReg.test(obj.email)){
-			errors.push({msg: "Please enter your email address"});
-			isValid=false;
+		if (!emailReg.test(obj.email)) {
+			errors.push({ msg: 'Please enter your email address' });
+			isValid = false;
 		}
-		if(obj.password.trim().length < 6){
-			errors.push({msg: "Your password should be more than 6 letter"});
-			isValid=false;
+		if (obj.password.trim().length < 6) {
+			errors.push({ msg: 'Your password should be more than 6 letter' });
+			isValid = false;
 		}
-		if(obj.password !== obj.password2 ){
-			errors.push({msg: "Your password should match the confirm password"});
-			isValid=false;
+		if (obj.password !== obj.password2) {
+			errors.push({ msg: 'Your password should match the confirm password' });
+			isValid = false;
 		}
-		this.setState({errors,failed: true});
+		this.setState({ errors, failed: true });
 		return isValid;
 	}
-	addNewUser = (e) =>{
+	addNewUser = (e) => {
 		e.preventDefault();
 		let obj = {
-			name : this.nameRef.current.value,
-			email : this.emailRef.current.value,
-			password : this.passwordRef.current.value,
-			password2 : this.paswordConfirmRef.current.value
-		}
-		if(this.validation(obj)){
-			axios.post('/newUser',{...obj})
-			  .then(response =>{
-				  console.log(response)
-				if(response.data.status === "success"){
-					this.setState({failed : false});
-					window.location.pathname = "/login"
-				}else{
-					this.setState({failed : true});
-					this.passwordRef.current.value = "";
-					this.paswordConfirmRef.current.value = "";
-					this.setState({errors: response.data.errors});
-				}
-				}).catch( err =>{
-					this.setState({errors: [{msg: "There was a problem with server, Please try again later."}]});
+			name: this.nameRef.current.value,
+			email: this.emailRef.current.value,
+			password: this.passwordRef.current.value,
+			password2: this.passwordConfirmRef.current.value
+		};
+		if (this.validation(obj)) {
+			axios
+				.post('/newUser', { ...obj })
+				.then((response) => {
+					console.log(response);
+					if (response.data.status === 'success') {
+						this.setState({ failed: false });
+						window.location.pathname = '/login';
+					} else {
+						this.setState({ failed: true });
+						this.passwordRef.current.value = '';
+						this.passwordConfirmRef.current.value = '';
+						this.setState({ errors: response.data.errors });
+					}
 				})
-		}else{
-			this.passwordRef.current.value= "";
-			this.paswordConfirmRef.current.value = "";
+				.catch((err) => {
+					this.setState({ errors: [ { msg: 'There was a problem with server, Please try again later.' } ] });
+				});
+		} else {
+			this.passwordRef.current.value = '';
+			this.passwordConfirmRef.current.value = '';
 		}
 	};
 	render() {
@@ -71,7 +73,11 @@ class Register extends React.Component {
 				<h1>
 					<img src={require('../../../assets/img/user-plus-solid.svg')} alt="user-img" />Register
 				</h1>
-				{this.state.errors.map((error, index) => <p className={Classes.error} key={index}>{error.msg}</p>)}
+				{this.state.errors.map((error, index) => (
+					<p className={Classes.error} key={index}>
+						{error.msg}
+					</p>
+				))}
 				<form onSubmit={this.addNewUser}>
 					<label>Name</label>
 					<input type="text" placeholder="Enter Name" ref={this.nameRef} />
@@ -80,7 +86,7 @@ class Register extends React.Component {
 					<label>Password</label>
 					<input type="password" placeholder="Create Password" ref={this.passwordRef} />
 					<label>Confirm Password</label>
-					<input type="password" placeholder="Confirm Password" ref={this.paswordConfirmRef} />
+					<input type="password" placeholder="Confirm Password" ref={this.passwordConfirmRef} />
 					<input type="submit" value="Register" />
 				</form>
 				<p>

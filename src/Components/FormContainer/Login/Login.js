@@ -56,6 +56,7 @@ class Login extends React.Component {
 						this.setState({failed : false});
 						sessionStorage.setItem("loginStatus", "true");
 						sessionStorage.setItem("state", JSON.stringify(userData))
+						this.props.updateLoginState("true");
 						this.props.history.push('/dashboard')
 					} else {
 						this.setState({ failed: true });

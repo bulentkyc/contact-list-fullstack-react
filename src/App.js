@@ -8,21 +8,29 @@ import Home from './Components/Home/Home';
 import DashBoard from './Components/Dashboard/DashBoard';
 
 
-function App() {
+class App extends React.Component {
+	state={
+        loginStatus: sessionStorage.getItem("loginStatus")
+	}
+	updateLoginState= (status)=>{
+		this.setState({loginStatus: status});
+	}
+	render(){
 	return (
 		<div className="App">
 			<BrowserRouter>
-				<NavBar />
+				<NavBar loginStatus={this.state.loginStatus} updateLoginState={this.updateLoginState}/>
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route path="/register/" component={Register} />
-					<Route path="/login/" component={Login} />
+					<Route path="/login/" render={(props)=> <Login {...props} updateLoginState={this.updateLoginState}/>} />
 					<Route  path="/dashboard/" component={DashBoard} />
 					{/* <Route component={NotExist} /> */}
 				</Switch>
 			</BrowserRouter>
 		</div>
 	);
+}
 }
 
 export default App;

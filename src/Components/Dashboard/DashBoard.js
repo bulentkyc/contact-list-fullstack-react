@@ -5,7 +5,7 @@ class DashBoard extends React.Component{
     state= {...JSON.parse(sessionStorage.getItem('state'))}
     componentDidMount(){
         console.log(sessionStorage.getItem('loginStatus'));
-		if(sessionStorage.getItem('loginStatus') === "false"){
+		if(sessionStorage.getItem('loginStatus') !== "true"){
 			this.props.history.push('/login')
 		}
 	}

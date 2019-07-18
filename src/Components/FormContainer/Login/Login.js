@@ -35,11 +35,11 @@ class Login extends React.Component {
 		};
 		if (this.validation(obj)) {
 			axios
-				.post('/dashboard', { ...obj })
+				.post('/loginUser', { ...obj })
 				.then((response) => {
 					console.log(response);
 					if (response.data.status === 'success') {
-						window.location.pathname = '/dashboard';
+					this.props.history.push('/dashboard' ,{...response.data})
 					} else {
 						this.setState({ failed: true });
 						this.passwordRef.current.value = '';

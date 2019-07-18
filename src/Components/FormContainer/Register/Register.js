@@ -41,7 +41,7 @@ class Register extends React.Component {
 			name : this.nameRef.current.value,
 			email : this.emailRef.current.value,
 			password : this.passwordRef.current.value,
-			password2 : this.paswordConfirmRef.current.value
+			password2 : this.passwordConfirmRef.current.value
 		}
 		if(this.validation(obj)){
 			axios.post('/newUser',{...obj})
@@ -59,7 +59,7 @@ class Register extends React.Component {
 				}else{
 					this.setState({failed : true});
 					this.passwordRef.current.value = "";
-					this.paswordConfirmRef.current.value = "";
+					this.passwordConfirmRef.current.value = "";
 					this.setState({errors: response.data.errors});
 				}
 				}).catch( err =>{
@@ -74,7 +74,6 @@ class Register extends React.Component {
 		}
 	};
 	render() {
-		console.log(this.state.props);
 		return (
 			<section className={Classes.containerForm}>
 				<h1>
@@ -89,7 +88,7 @@ class Register extends React.Component {
 					<label>Name</label>
 					<input type="text" placeholder="Enter Name" ref={this.nameRef} />
 					<label>Email</label>
-					<input type="email" placeholder="Enter Email" ref={this.emailRef} />
+					<input type="text" placeholder="Enter Email" ref={this.emailRef} />
 					<label>Password</label>
 					<input type="password" placeholder="Create Password" ref={this.passwordRef} />
 					<label>Confirm Password</label>

@@ -37,9 +37,17 @@ class Login extends React.Component {
 			axios
 				.post('/loginUser', { ...obj })
 				.then((response) => {
-					console.log(response);
+					const userData = {
+						id : response.data.id,
+						name : response.data.name,
+						email : response.data.email,
+						date : response.data.date,
+					}
+					console.log(userData);
+
 					if (response.data.status === 'success') {
-					this.props.history.push('/dashboard' ,{...response.data})
+						this.setState({failed : false});
+						this.props.history.push('/dashboard' ,{...userData})
 					} else {
 						this.setState({ failed: true });
 						this.passwordRef.current.value = '';
@@ -59,9 +67,14 @@ class Login extends React.Component {
 				<h1>
 					<img src={require('../../../assets/img/user-solid.svg')} alt="user-img" />Login
 				</h1>
-				<form>
+				{this.state.errors.map((error, index) => (
+					<p className={Classes.error} key={index}>
+						{error.msg}
+					</p>
+				))}
+				<form onSubmit={this.userLogged}>
 					<label>Email</label>
-					<input type="email" placeholder="Enter Email" ref={this.emailRef} />
+					<input type="text" placeholder="Enter Email" ref={this.emailRef} />
 					<label>Password</label>
 					<input type="password" placeholder="Create Password" ref={this.passwordRef} />
 					<input type="submit" value="Login" />

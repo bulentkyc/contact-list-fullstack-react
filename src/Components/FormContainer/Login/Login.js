@@ -3,29 +3,6 @@ import { Link } from 'react-router-dom';
 import Classes from '../Form.module.scss';
 import axios from 'axios';
 
-<<<<<<< HEAD
-const Login = (props) => {
-	console.log(props);
-	console.log(window.location);
-	return (
-		<section className={Classes.containerForm}>
-			<h1>
-				<img src={require('../../../assets/img/user-solid.svg')} alt="user-img" />Login
-			</h1>
-			<form>
-				<label>Email</label>
-				<input type="email" placeholder="Enter Email" />
-				<label>Password</label>
-				<input type="password" placeholder="Create Password" />
-				<input type="submit" value="Login" />
-			</form>
-			<p>
-				Create a Account? <Link to="/register">Register</Link>
-			</p>
-		</section>
-	);
-};
-=======
 class Login extends React.Component {
 	state = {
 		failed: false,
@@ -96,5 +73,4 @@ class Login extends React.Component {
 		);
 	}
 }
->>>>>>> 20d4fe56b9f3261486176a6dc81406b4348a3cee
 export default Login;

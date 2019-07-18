@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Classes from '../Form.module.scss';
 
-const Login = () => {
+const Login = (props) => {
+	console.log(props);
+	console.log(window.location);
 	return (
 		<section className={Classes.containerForm}>
 			<h1>

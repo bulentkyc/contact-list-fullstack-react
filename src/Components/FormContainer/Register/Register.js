@@ -49,7 +49,13 @@ class Register extends React.Component {
 				  console.log(response)
 				if(response.data.status === "success"){
 					this.setState({failed : false});
-					window.location.pathname = "/login"
+					this.props.history.push('/login', { id: 7, color: 'green' })
+					// this.props.router.push({
+					// 	pathname: "/login",
+					// 	logUser: {
+					// 		...obj
+					// 	}
+					// })
 				}else{
 					this.setState({failed : true});
 					this.passwordRef.current.value = "";
@@ -65,7 +71,7 @@ class Register extends React.Component {
 		}
 	};
 	render() {
-		console.log(this.state.errors);
+		console.log(this.state.props);
 		return (
 			<section className={Classes.containerForm}>
 				<h1>

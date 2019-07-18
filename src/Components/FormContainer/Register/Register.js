@@ -38,6 +38,34 @@ class Register extends React.Component {
 	addNewUser = (e) => {
 		e.preventDefault();
 		let obj = {
+<<<<<<< HEAD
+			name : this.nameRef.current.value,
+			email : this.emailRef.current.value,
+			password : this.passwordRef.current.value,
+			password2 : this.paswordConfirmRef.current.value
+		}
+		if(this.validation(obj)){
+			axios.post('/newUser',{...obj})
+			  .then(response =>{
+				  console.log(response)
+				if(response.data.status === "success"){
+					this.setState({failed : false});
+					this.props.history.push('/login', { id: 7, color: 'green' })
+					// this.props.router.push({
+					// 	pathname: "/login",
+					// 	logUser: {
+					// 		...obj
+					// 	}
+					// })
+				}else{
+					this.setState({failed : true});
+					this.passwordRef.current.value = "";
+					this.paswordConfirmRef.current.value = "";
+					this.setState({errors: response.data.errors});
+				}
+				}).catch( err =>{
+					this.setState({errors: [{msg: "There was a problem with server, Please try again later."}]});
+=======
 			name: this.nameRef.current.value,
 			email: this.emailRef.current.value,
 			password: this.passwordRef.current.value,
@@ -57,6 +85,7 @@ class Register extends React.Component {
 						this.passwordConfirmRef.current.value = '';
 						this.setState({ errors: response.data.errors });
 					}
+>>>>>>> 20d4fe56b9f3261486176a6dc81406b4348a3cee
 				})
 				.catch((err) => {
 					this.setState({ errors: [ { msg: 'There was a problem with server, Please try again later.' } ] });
@@ -67,7 +96,7 @@ class Register extends React.Component {
 		}
 	};
 	render() {
-		console.log(this.state.errors);
+		console.log(this.state.props);
 		return (
 			<section className={Classes.containerForm}>
 				<h1>

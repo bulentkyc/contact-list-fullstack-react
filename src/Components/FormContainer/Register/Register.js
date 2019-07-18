@@ -49,7 +49,7 @@ class Register extends React.Component {
 				  console.log(response)
 				if(response.data.status === "success"){
 					this.setState({failed : false});
-					this.props.history.push('/login', { id: 7, color: 'green' })
+					this.props.history.push('/login')
 					// this.props.router.push({
 					// 	pathname: "/login",
 					// 	logUser: {

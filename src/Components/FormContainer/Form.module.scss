@@ -20,13 +20,12 @@
 			padding: 8px;
 		}
 	}
-	.error{
+	.error {
 		padding: 1% 5%;
 		margin: 2% auto;
 		width: 80%;
-		color:$redOrange;
-		background: rgba($gray,0.4);
-
+		color: $redOrange;
+		background: rgba($gray, 0.4);
 	}
 	form {
 		display: flex;
@@ -59,7 +58,6 @@
 		}
 	}
 }
-
 @media (max-width: 800px) {
 	.containerForm {
 		width: 90%;

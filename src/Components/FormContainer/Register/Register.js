@@ -7,11 +7,17 @@ class Register extends React.Component {
 		failed: false,
 		errors: []
 	};
+	componentDidMount(){
+        console.log(sessionStorage.getItem('loginStatus'));
+
+		if(sessionStorage.getItem('loginStatus') === "true"){
+			this.props.history.push('/dashboard')
+		}
+	}
 	nameRef = React.createRef();
 	emailRef = React.createRef();
 	passwordRef = React.createRef();
 	passwordConfirmRef = React.createRef();
-
 	validation(obj) {
 		let errors = [];
 		let isValid = true;

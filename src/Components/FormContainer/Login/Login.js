@@ -8,6 +8,13 @@ class Login extends React.Component {
 		failed: false,
 		errors: []
 	};
+	componentDidMount(){
+        console.log(sessionStorage.getItem('loginStatus'));
+
+		if(sessionStorage.getItem('loginStatus') === "true"){
+			this.props.history.push('/dashboard')
+		}
+	}
 	emailRef = React.createRef();
 	passwordRef = React.createRef();
 
@@ -47,7 +54,10 @@ class Login extends React.Component {
 
 					if (response.data.status === 'success') {
 						this.setState({failed : false});
-						this.props.history.push('/dashboard' ,{...userData})
+						sessionStorage.setItem("loginStatus", "true");
+						sessionStorage.setItem("state", JSON.stringify(userData))
+						this.props.updateLoginState("true");
+						this.props.history.push('/dashboard')
 					} else {
 						this.setState({ failed: true });
 						this.passwordRef.current.value = '';

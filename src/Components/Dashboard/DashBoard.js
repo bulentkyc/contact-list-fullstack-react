@@ -1,13 +1,8 @@
 import React from 'react';
 import classes from './DashBoard.module.scss';
 
-<<<<<<< HEAD
-class DashBoard extends React.Component {
-	state= {...JSON.parse(sessionStorage.getItem('state'))}
-=======
 class DashBoard extends React.Component{
    state= {userData: {}}
->>>>>>> 889fabb337d033240feb61f14d31b49be875f432
     componentDidMount(){
         console.log(sessionStorage.getItem('loginStatus'));
 		if(sessionStorage.getItem('loginStatus') !== "true"){

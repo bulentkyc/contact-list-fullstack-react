@@ -38,25 +38,32 @@ class Register extends React.Component {
 	addNewUser = (e) => {
 		e.preventDefault();
 		let obj = {
-			name: this.nameRef.current.value,
-			email: this.emailRef.current.value,
-			password: this.passwordRef.current.value,
-			password2: this.passwordConfirmRef.current.value
-		};
-		if (this.validation(obj)) {
-			axios
-				.post('/newUser', { ...obj })
-				.then((response) => {
-					console.log(response);
-					if (response.data.status === 'success') {
-						this.setState({ failed: false });
-						window.location.pathname = '/login';
-					} else {
-						this.setState({ failed: true });
-						this.passwordRef.current.value = '';
-						this.passwordConfirmRef.current.value = '';
-						this.setState({ errors: response.data.errors });
-					}
+			name : this.nameRef.current.value,
+			email : this.emailRef.current.value,
+			password : this.passwordRef.current.value,
+			password2 : this.paswordConfirmRef.current.value
+		}
+		if(this.validation(obj)){
+			axios.post('/newUser',{...obj})
+			  .then(response =>{
+				  console.log(response)
+				if(response.data.status === "success"){
+					this.setState({failed : false});
+					this.props.history.push('/login', { id: 7, color: 'green' })
+					// this.props.router.push({
+					// 	pathname: "/login",
+					// 	logUser: {
+					// 		...obj
+					// 	}
+					// })
+				}else{
+					this.setState({failed : true});
+					this.passwordRef.current.value = "";
+					this.paswordConfirmRef.current.value = "";
+					this.setState({errors: response.data.errors});
+				}
+				}).catch( err =>{
+					this.setState({errors: [{msg: "There was a problem with server, Please try again later."}]});
 				})
 				.catch((err) => {
 					this.setState({ errors: [ { msg: 'There was a problem with server, Please try again later.' } ] });
@@ -67,7 +74,7 @@ class Register extends React.Component {
 		}
 	};
 	render() {
-		console.log(this.state.errors);
+		console.log(this.state.props);
 		return (
 			<section className={Classes.containerForm}>
 				<h1>

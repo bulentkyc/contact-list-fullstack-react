@@ -2,7 +2,16 @@ import React from "react";
 import classes from "./Home.module.scss";
 
 
-const Home = () =>{
+class Home extends React.Component{
+    componentDidMount(){
+        console.log(sessionStorage.getItem('loginStatus'));
+
+		if(sessionStorage.getItem('loginStatus') === "true"){
+			this.props.history.push('/dashboard')
+		}
+    }
+    render(){
+
     return(
         <section className={classes.home}>
             <h1>Welcome to Maily</h1>
@@ -11,6 +20,7 @@ const Home = () =>{
             </p>
         </section>
     );
+}
 }
 
 export default Home;

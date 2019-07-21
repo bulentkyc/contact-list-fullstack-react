@@ -7,11 +7,17 @@ class Register extends React.Component {
 		failed: false,
 		errors: []
 	};
+	componentDidMount(){
+        console.log(sessionStorage.getItem('loginStatus'));
+
+		if(sessionStorage.getItem('loginStatus') === "true"){
+			this.props.history.push('/dashboard')
+		}
+	}
 	nameRef = React.createRef();
 	emailRef = React.createRef();
 	passwordRef = React.createRef();
 	passwordConfirmRef = React.createRef();
-
 	validation(obj) {
 		let errors = [];
 		let isValid = true;
@@ -41,7 +47,7 @@ class Register extends React.Component {
 			name : this.nameRef.current.value,
 			email : this.emailRef.current.value,
 			password : this.passwordRef.current.value,
-			password2 : this.paswordConfirmRef.current.value
+			password2 : this.passwordConfirmRef.current.value
 		}
 		if(this.validation(obj)){
 			axios.post('/newUser',{...obj})
@@ -49,7 +55,7 @@ class Register extends React.Component {
 				  console.log(response)
 				if(response.data.status === "success"){
 					this.setState({failed : false});
-					this.props.history.push('/login', { id: 7, color: 'green' })
+					this.props.history.push('/login')
 					// this.props.router.push({
 					// 	pathname: "/login",
 					// 	logUser: {
@@ -59,7 +65,7 @@ class Register extends React.Component {
 				}else{
 					this.setState({failed : true});
 					this.passwordRef.current.value = "";
-					this.paswordConfirmRef.current.value = "";
+					this.passwordConfirmRef.current.value = "";
 					this.setState({errors: response.data.errors});
 				}
 				}).catch( err =>{
@@ -74,7 +80,6 @@ class Register extends React.Component {
 		}
 	};
 	render() {
-		console.log(this.state.props);
 		return (
 			<section className={Classes.containerForm}>
 				<h1>
@@ -89,7 +94,7 @@ class Register extends React.Component {
 					<label>Name</label>
 					<input type="text" placeholder="Enter Name" ref={this.nameRef} />
 					<label>Email</label>
-					<input type="email" placeholder="Enter Email" ref={this.emailRef} />
+					<input type="text" placeholder="Enter Email" ref={this.emailRef} />
 					<label>Password</label>
 					<input type="password" placeholder="Create Password" ref={this.passwordRef} />
 					<label>Confirm Password</label>

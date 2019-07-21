@@ -8,6 +8,13 @@ class Login extends React.Component {
 		failed: false,
 		errors: []
 	};
+	componentDidMount(){
+        console.log(sessionStorage.getItem('loginStatus'));
+
+		if(sessionStorage.getItem('loginStatus') === "true"){
+			this.props.history.push('/dashboard')
+		}
+	}
 	emailRef = React.createRef();
 	passwordRef = React.createRef();
 
@@ -35,11 +42,22 @@ class Login extends React.Component {
 		};
 		if (this.validation(obj)) {
 			axios
-				.post('/dashboard', { ...obj })
+				.post('/loginUser', { ...obj })
 				.then((response) => {
-					console.log(response);
+					const userData = {
+						id : response.data.id,
+						name : response.data.name,
+						email : response.data.email,
+						date : response.data.date,
+					}
+					console.log(userData);
+
 					if (response.data.status === 'success') {
-						window.location.pathname = '/dashboard';
+						this.setState({failed : false});
+						sessionStorage.setItem("loginStatus", "true");
+						sessionStorage.setItem("state", JSON.stringify(userData))
+						this.props.updateLoginState("true");
+						this.props.history.push('/dashboard')
 					} else {
 						this.setState({ failed: true });
 						this.passwordRef.current.value = '';
@@ -59,9 +77,14 @@ class Login extends React.Component {
 				<h1>
 					<img src={require('../../../assets/img/user-solid.svg')} alt="user-img" />Login
 				</h1>
-				<form>
+				{this.state.errors.map((error, index) => (
+					<p className={Classes.error} key={index}>
+						{error.msg}
+					</p>
+				))}
+				<form onSubmit={this.userLogged}>
 					<label>Email</label>
-					<input type="email" placeholder="Enter Email" ref={this.emailRef} />
+					<input type="text" placeholder="Enter Email" ref={this.emailRef} />
 					<label>Password</label>
 					<input type="password" placeholder="Create Password" ref={this.passwordRef} />
 					<input type="submit" value="Login" />

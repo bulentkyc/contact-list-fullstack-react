@@ -21,6 +21,12 @@
         display: flex;
         li{
             list-style: none;
+            p{
+                padding: 10px 20px;
+                color:$white;
+                margin: 0;
+                text-transform: capitalize;
+            }
             a{
                 display: inline-block;
                 padding: 10px 20px;

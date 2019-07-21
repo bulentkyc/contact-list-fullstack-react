@@ -1,10 +1,58 @@
-.dashBoard{
-    width: 50%;
-    margin: 0 auto;
-    form{
-        width: 100%;
-        input{
-            width: 100%;
-        }
-    }
+@import '../../assets/Scss/variables.scss';
+@import '../../Components/FormContainer/Form.module.scss';
+
+.portfolioiImg {
+	border-radius: 50%;
+	width: 120px;
+	box-shadow: 0 0 3px $gray;
+}
+input[type='file'] {
+	border: 1px solid $gray;
+	position: relative;
+	&::-webkit-file-upload-button {
+		visibility: hidden;
+	}
+	&::before {
+		content: 'Select Your Photo';
+		background-color: $white;
+		position: absolute;
+		left: 0;
+		width: 100%;
+		text-align: center;
+		padding: 1%;
+	}
+}
+.contactList {
+	width: 60%;
+	min-width: 500px;
+	margin: 5% auto;
+	padding: 2%;
+	ul {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		list-style: none;
+		padding: 0;
+		img {
+			width: 70px;
+		}
+		.iconImg {
+			width: 25px;
+			cursor: pointer;
+		}
+	}
+}
+@media (max-width: 800px) {
+	.contactList {
+		width: 90%;
+		min-width: unset;
+		ul {
+			img {
+				width: 50px;
+			}
+			.iconImg {
+				width: 15px;
+			}
+		}
+	}
 }

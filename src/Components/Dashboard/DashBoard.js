@@ -2,12 +2,14 @@ import React from 'react';
 import classes from "./DashBoard.module.scss";
 
 class DashBoard extends React.Component{
-    state= {...JSON.parse(sessionStorage.getItem('state'))}
+   state= {userData: {}}
     componentDidMount(){
         console.log(sessionStorage.getItem('loginStatus'));
 		if(sessionStorage.getItem('loginStatus') !== "true"){
 			this.props.history.push('/login')
-		}
+		}else{
+            this.setState({userData: JSON.parse(sessionStorage.getItem('state'))})
+        }
 	}
     render(){
         console.log(this.state)

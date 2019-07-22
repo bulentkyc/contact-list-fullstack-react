@@ -71,9 +71,6 @@ class Register extends React.Component {
 				}).catch( err =>{
 					this.setState({errors: [{msg: "There was a problem with server, Please try again later."}]});
 				})
-				.catch((err) => {
-					this.setState({ errors: [ { msg: 'There was a problem with server, Please try again later.' } ] });
-				});
 		} else {
 			this.passwordRef.current.value = '';
 			this.passwordConfirmRef.current.value = '';

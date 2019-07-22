@@ -27,7 +27,7 @@ class DashBoard extends React.Component{
 		let errors = [];
 		let isValid = true;
 		const emailReg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-        if (obj.name.trim().length < 2) {
+		if (obj.name.trim().length < 2) {
 			errors.push({ msg: 'Please enter the full name' });
 			isValid = false;
 		}
@@ -51,7 +51,7 @@ class DashBoard extends React.Component{
 		e.preventDefault();
 		let errors =[];
 		let obj = {
-            userID: this.state.userData.id,
+			userID: this.state.userData.id,
 			name: this.nameRef.current.value,
             email: this.emailRef.current.value,
 		};
@@ -100,21 +100,23 @@ class DashBoard extends React.Component{
 			}
 			
 		}
-    }
+	};
+	updateContactList = () => {};
+	deleteContactList = () => {};
 	render() {
 		return (
-			<>
+			<div>
 				<section className={classes.containerForm}>
 					<img
 						className={classes.portfolioImg}
 						src={require('../../assets/img/av.default.png')}
 						alt="portfolio"
 					/>
-                    {this.state.errors.map((error, index) => (
-					<p className={classes.error} key={index}>
-						{error.msg}
-					</p>
-				    ))}
+					{this.state.errors.map((error, index) => (
+						<p className={classes.error} key={index}>
+							{error.msg}
+						</p>
+					))}
 					<form onSubmit={this.addContact}>
 						<input type="text" name="name" placeholder="Please enter contact name" ref={this.nameRef} />
 						<input type="text" name="email" placeholder="Please enter contact email" ref={this.emailRef}/>
@@ -122,9 +124,15 @@ class DashBoard extends React.Component{
 						<input type="submit" value="Submit" />
 					</form>
 				</section>
-                {this.state.contactList.map(item => <Contact key={item.id} {...item} />)}
-				
-			</>
+				{this.state.contactList.map((item) => (
+					<Contact
+						key={item.id}
+						{...item}
+						updateContactList={this.updateContactList}
+						deleteContactList={this.deleteContactList}
+					/>
+				))}
+			</div>
 		);
 	}
 }

@@ -2,12 +2,14 @@ import React from 'react';
 import classes from './DashBoard.module.scss';
 import Contact from './Contact/Contact';
 import axios from "axios";
+import DefaultImg from '../../assets/img/av.default.png';
 
 
 class DashBoard extends React.Component{
    state= {
         userData: {},
         contactList: [{id: 1},{id: 2}],
+        multerImage: DefaultImg,
         failed: false,
         errors: []
 }
@@ -35,12 +37,27 @@ class DashBoard extends React.Component{
 		}
 		this.setState({ errors, failed: true });
 		return isValid;
-	}
+    }
+    uploadImage = (e)=>{
+        let imageFormObj = new FormData();
+
+        imageFormObj.append("imageName", "multer-image-" + Date.now());
+        imageFormObj.append("imageData", e.target.files[0]);
+
+        // stores a readable instance of 
+        // the image being uploaded using multer
+        console.log(URL.createObjectURL(e.target.files[0]));
+        this.setState({
+            multerImage: URL.createObjectURL(e.target.files[0])
+        });
+    }
     addContact = (e)=>{
         e.preventDefault();
 		let obj = {
+            userID: this.state.userData.id,
 			name: this.nameRef.current.value,
-			email: this.emailRef.current.value
+            email: this.emailRef.current.value,
+            avatar: this.state.multerImage
 		};
 		if (this.validation(obj)) {
 			axios
@@ -50,15 +67,13 @@ class DashBoard extends React.Component{
 
 					console.log(contactList);
 					if (response.data.status === 'success') {
-                        this.setState({contactList});
-						this.setState({failed : false});
+                        this.setState({multerImage: DefaultImg, contactList,failed : false});
 					} else {
-						this.setState({ failed: true });
-						this.setState({ errors: response.data.errors });
+						this.setState({ failed: true, errors: response.data.errors });
 					}
 				})
 				.catch((err) => {
-					this.setState({ errors: [ { msg: 'There Was a problem with server, Please try again later' } ] });
+                    this.setState({multerImage: DefaultImg, errors: [ { msg: 'There Was a problem with server, Please try again later' } ] });
 				});
 		}
     }
@@ -80,7 +95,7 @@ class DashBoard extends React.Component{
 					<form onSubmit={this.addContact}>
 						<input type="text" name="name" placeholder="Please enter contact name" ref={this.nameRef} />
 						<input type="text" name="email" placeholder="Please enter contact email" ref={this.emailRef}/>
-						<input type="file" name="file" />
+						<input type="file" name="file" onChange={(e) => this.uploadImage(e, "multer")}/>
 						<input type="submit" value="Submit" />
 					</form>
 				</section>

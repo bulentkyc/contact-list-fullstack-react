@@ -20,7 +20,21 @@ class DashBoard extends React.Component {
 		if (sessionStorage.getItem('loginStatus') !== 'true') {
 			this.props.history.push('/login');
 		} else {
-			this.setState({ userData: JSON.parse(sessionStorage.getItem('state')) });
+			this.setState({ userData: JSON.parse(sessionStorage.getItem('state')) }, () => {
+				if (this.state.userData !== {}) {
+					axios
+						.get(`/getContactList/${this.state.userData.id}`)
+						.then((res) => {
+							console.log(res);
+
+							if (res.data.status === 'success') {
+								this.setState({ contactList: res.data.newContactData });
+							} else {
+							}
+						})
+						.catch((err) => {});
+				}
+			});
 		}
 	}
 	validation(obj) {

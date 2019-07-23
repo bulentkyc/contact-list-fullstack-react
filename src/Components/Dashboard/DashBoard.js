@@ -4,6 +4,7 @@ import Contact from './Contact/Contact';
 import axios from 'axios';
 // import DefaultImg from '../../assets/img/av.default.png';
 import SendEmail from './SendEmail/SendEmail';
+import UpdateContact from "./UpdateContact/UpdateContact";
 
 class DashBoard extends React.Component {
 	state = {
@@ -12,7 +13,10 @@ class DashBoard extends React.Component {
 		selectedFile: null,
 		failed: false,
 		errors: [],
-		sendEmailOpen: false
+		sendEmailOpen: false,
+		showUpdateContact: false,
+		blackBg: false,
+		updatedObj: {}
 	};
 	nameRef = React.createRef();
 	emailRef = React.createRef();
@@ -74,7 +78,6 @@ class DashBoard extends React.Component {
 			if (this.state.selectedFile === null) {
 				obj.avatar = 'av.default.png';
 				axios
-<<<<<<< HEAD
 					.post('/newContact', { ...obj })
 					.then((res) => {
 						console.log(res);
@@ -92,25 +95,6 @@ class DashBoard extends React.Component {
 						errors.push({ msg: 'There Was a problem with server, Please try again later' });
 						this.setState({ selectedFile: null, errors });
 					});
-=======
-				.post('/newContact', { ...obj })
-				.then((res) => {
-					console.log(res);
-					const newContact = res.data.newContactData;
-					let contactList = [ ...this.state.contactList ];
-					contactList.push(newContact);
-					if (res.data.status === 'success') {
-						this.setState({ selectedFile: null, contactList: contactList, failed: false, errors: [] });
-					} else {
-						errors = [ ...res.data.errors ];
-						this.setState({ failed: true, errors });
-					}
-				})
-				.catch((err) => {
-					errors.push({ msg: 'There Was a problem with server, Please try again later' });
-					this.setState({ selectedFile: null, errors });
-				});
->>>>>>> d0990abdc1d06f9f94e7fe24ed618819ee6fe78a
 			} else {
 				const data = new FormData();
 				data.append('file', this.state.selectedFile);
@@ -157,14 +141,12 @@ class DashBoard extends React.Component {
 						}
 					});
 			}
-<<<<<<< HEAD
-
-=======
-			
->>>>>>> d0990abdc1d06f9f94e7fe24ed618819ee6fe78a
 			e.target.reset();
 		}
 	};
+	showUpdateContact = (obj) =>{
+		this.setState({updatedObj:{...obj} ,showUpdateContact: true , blackBg: true})
+	}
 	updateContactList = () => {};
 	deleteContactList = (id) => {
 		axios.get(`deleteContact/${id}`)
@@ -182,9 +164,21 @@ class DashBoard extends React.Component {
 				}
 			})
 	};
+	updateContactState = (obj)=>{
+		let newContactArray = [...this.state.contactList];
+		console.log(obj.id);
+		const index = newContactArray.findIndex(item => item._id === obj.id);
+		if(index !== -1){
+			newContactArray[index] = obj;
+			this.setState({contactList: newContactArray}, ()=>{this.blackBg()});
+		}
+	}
 	sendEmail = () => {
-		this.setState({ sendEmailOpen: !this.state.sendEmailOpen });
+		this.setState({ sendEmailOpen: true , blackBg: true});
 	};
+	blackBg = () =>{
+		this.setState({blackBg: false, sendEmailOpen: false, showUpdateContact: false})
+	}
 	render() {
 		return (
 			<div>
@@ -210,14 +204,15 @@ class DashBoard extends React.Component {
 					<Contact
 						key={item._id}
 						{...item}
-						updateContactList={this.updateContactList}
+						showUpdateContact={this.showUpdateContact}
 						sendEmail={this.sendEmail}
 						deleteContactList={this.deleteContactList}
 					/>
 				))}
 
 				{this.state.sendEmailOpen ? <SendEmail /> : null}
-				{this.state.sendEmailOpen ? <div className={classes.blackBg} onClick={this.sendEmail} /> : null}
+				{this.state.showUpdateContact ? <UpdateContact updateContactState={this.updateContactState} {...this.state.updatedObj} /> : null}
+				{this.state.blackBg ? <div className={classes.blackBg} onClick={this.blackBg} /> : null}
 			</div>
 		);
 	}

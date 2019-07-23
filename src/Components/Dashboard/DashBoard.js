@@ -173,10 +173,11 @@ class DashBoard extends React.Component {
 			});
 		}
 	};
-	sendEmail = () => {
+	sendEmail = (obj) => {
 		this.setState({ sendEmailOpen: true, blackBg: true });
 		axios.post('/sendMail', { ...obj }).then((res) => {
 			console.log(res);
+			this.blackBg();
 		});
 	};
 	blackBg = () => {

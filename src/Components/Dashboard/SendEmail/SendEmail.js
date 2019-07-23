@@ -6,7 +6,7 @@ class SendEmail extends React.Component {
 		// formData: {}
 	};
 	refName = React.createRef();
-	refEmail = React.createRef();
+	refTo = React.createRef();
 	refCc = React.createRef();
 	refMessage = React.createRef();
 	refUser = React.createRef();
@@ -14,14 +14,13 @@ class SendEmail extends React.Component {
 
 	collectData = (e) => {
 		e.preventDefault();
-
 		let formData = {
-			from: this.refName,
-			to: this.refTo,
-			cc: this.refCc,
-			message: this.refMessage,
-			user: this.refUser,
-			pass: this.refPassword
+			from: this.refName.current.value,
+			to: this.refTo.current.value,
+			cc: this.refCc.current.value,
+			message: this.refMessage.current.value,
+			user: this.refUser.current.value,
+			pass: this.refPassword.current.value
 		};
 		this.props.SendEmail(formData);
 	};
@@ -33,7 +32,7 @@ class SendEmail extends React.Component {
 						<img src={require('../../../assets/img/av.default.png')} alt="img" />Mohammad
 					</h1>
 					<input type="text" placeholder="from" ref={this.refName} />
-					<input type="email" placeholder="to" ref={this.refEmail} />
+					<input type="email" placeholder="to" ref={this.refTo} />
 					<input type="text" placeholder="cc" ref={this.refCc} />
 					<textarea placeholder="your message" ref={this.refMessage} />
 					<input type="file" name="file" />

@@ -17,6 +17,13 @@ const Contact = (props) => {
 						alt="edit"
 					/>{' '}
 				</li>
+				<li onClick={props.sendEmail}>
+					<img
+						className={classes.iconImg}
+						src={require('../../../assets/img/user-edit-solid.svg')}
+						alt="edit"
+					/>{' '}
+				</li>
 				<li onClick={props.deleteContactList}>
 					<img
 						className={classes.iconImg}

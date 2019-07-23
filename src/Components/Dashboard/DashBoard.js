@@ -74,6 +74,7 @@ class DashBoard extends React.Component {
 			if (this.state.selectedFile === null) {
 				obj.avatar = 'av.default.png';
 				axios
+<<<<<<< HEAD
 					.post('/newContact', { ...obj })
 					.then((res) => {
 						console.log(res);
@@ -91,6 +92,25 @@ class DashBoard extends React.Component {
 						errors.push({ msg: 'There Was a problem with server, Please try again later' });
 						this.setState({ selectedFile: null, errors });
 					});
+=======
+				.post('/newContact', { ...obj })
+				.then((res) => {
+					console.log(res);
+					const newContact = res.data.newContactData;
+					let contactList = [ ...this.state.contactList ];
+					contactList.push(newContact);
+					if (res.data.status === 'success') {
+						this.setState({ selectedFile: null, contactList: contactList, failed: false, errors: [] });
+					} else {
+						errors = [ ...res.data.errors ];
+						this.setState({ failed: true, errors });
+					}
+				})
+				.catch((err) => {
+					errors.push({ msg: 'There Was a problem with server, Please try again later' });
+					this.setState({ selectedFile: null, errors });
+				});
+>>>>>>> d0990abdc1d06f9f94e7fe24ed618819ee6fe78a
 			} else {
 				const data = new FormData();
 				data.append('file', this.state.selectedFile);
@@ -137,12 +157,31 @@ class DashBoard extends React.Component {
 						}
 					});
 			}
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> d0990abdc1d06f9f94e7fe24ed618819ee6fe78a
 			e.target.reset();
 		}
 	};
 	updateContactList = () => {};
-	deleteContactList = () => {};
+	deleteContactList = (id) => {
+		axios.get(`deleteContact/${id}`)
+			.then(res =>{
+				if(res.data.status === "success"){
+					let newArrayContact = [...this.state.contactList];
+					let index = newArrayContact.findIndex(item => item._id === id);
+					if(index !== -1){
+						newArrayContact.splice(index,1);
+						this.setState({contactList: newArrayContact});
+					}
+				}
+				else{
+					// error
+				}
+			})
+	};
 	sendEmail = () => {
 		this.setState({ sendEmailOpen: !this.state.sendEmailOpen });
 	};
@@ -169,7 +208,7 @@ class DashBoard extends React.Component {
 				</section>
 				{this.state.contactList.map((item) => (
 					<Contact
-						key={item.id}
+						key={item._id}
 						{...item}
 						updateContactList={this.updateContactList}
 						sendEmail={this.sendEmail}

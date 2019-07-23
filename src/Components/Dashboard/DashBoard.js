@@ -118,6 +118,25 @@ class DashBoard extends React.Component {
 						}
 					});
 			}
+			axios
+			.post('/newContact', {...obj} )
+			.then((res) => {
+				console.log(res);
+				const newContact= res.data.newContactData
+				let contactList = [...this.state.contactList];
+				contactList.push(newContact);
+				if (res.data.status === 'success') {
+					this.setState({selectedFile: null,contactList: contactList, failed : false, errors: []});
+				} else {
+					errors = [ ...res.data.errors];
+					this.setState({ failed: true, errors });
+				}
+			})
+			.catch((err) => {
+				errors.push({ msg: 'There Was a problem with server, Please try again later' })
+				this.setState({selectedFile: null, errors });
+			});
+			e.target.reset();
 		}
 	};
 	updateContactList = () => {};

@@ -4,6 +4,7 @@ import Contact from './Contact/Contact';
 import axios from 'axios';
 // import DefaultImg from '../../assets/img/av.default.png';
 import SendEmail from './SendEmail/SendEmail';
+import UpdateContact from "./UpdateContact/UpdateContact";
 
 class DashBoard extends React.Component {
 	state = {
@@ -12,7 +13,10 @@ class DashBoard extends React.Component {
 		selectedFile: null,
 		failed: false,
 		errors: [],
-		sendEmailOpen: false
+		sendEmailOpen: false,
+		showUpdateContact: false,
+		blackBg: false,
+		updatedObj: {}
 	};
 	nameRef = React.createRef();
 	emailRef = React.createRef();
@@ -141,6 +145,9 @@ class DashBoard extends React.Component {
 			e.target.reset();
 		}
 	};
+	showUpdateContact = (obj) =>{
+		this.setState({updatedObj:{...obj} ,showUpdateContact: true , blackBg: true})
+	}
 	updateContactList = () => {};
 	deleteContactList = (id) => {
 		axios.get(`deleteContact/${id}`)
@@ -158,9 +165,21 @@ class DashBoard extends React.Component {
 				}
 			})
 	};
+	updateContactState = (obj)=>{
+		let newContactArray = [...this.state.contactList];
+		console.log(obj.id);
+		const index = newContactArray.findIndex(item => item._id === obj.id);
+		if(index !== -1){
+			newContactArray[index] = obj;
+			this.setState({contactList: newContactArray}, ()=>{this.blackBg()});
+		}
+	}
 	sendEmail = () => {
-		this.setState({ sendEmailOpen: !this.state.sendEmailOpen });
+		this.setState({ sendEmailOpen: true , blackBg: true});
 	};
+	blackBg = () =>{
+		this.setState({blackBg: false, sendEmailOpen: false, showUpdateContact: false})
+	}
 	render() {
 		return (
 			<div>
@@ -186,14 +205,15 @@ class DashBoard extends React.Component {
 					<Contact
 						key={item._id}
 						{...item}
-						updateContactList={this.updateContactList}
+						showUpdateContact={this.showUpdateContact}
 						sendEmail={this.sendEmail}
 						deleteContactList={this.deleteContactList}
 					/>
 				))}
 
 				{this.state.sendEmailOpen ? <SendEmail /> : null}
-				{this.state.sendEmailOpen ? <div className={classes.blackBg} onClick={this.sendEmail} /> : null}
+				{this.state.showUpdateContact ? <UpdateContact updateContactState={this.updateContactState} {...this.state.updatedObj} /> : null}
+				{this.state.blackBg ? <div className={classes.blackBg} onClick={this.blackBg} /> : null}
 			</div>
 		);
 	}

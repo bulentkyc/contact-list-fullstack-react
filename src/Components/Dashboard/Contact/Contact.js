@@ -17,7 +17,7 @@ const Contact = (props) => {
 						alt="edit"
 					/>{' '}
 				</li>
-				<li onClick={props.deleteContactList}>
+				<li onClick={()=>props.deleteContactList(props._id)}>
 					<img
 						className={classes.iconImg}
 						src={require('../../../assets/img/times-solid.svg')}

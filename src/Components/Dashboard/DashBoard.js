@@ -140,7 +140,22 @@ class DashBoard extends React.Component {
 		}
 	};
 	updateContactList = () => {};
-	deleteContactList = () => {};
+	deleteContactList = (id) => {
+		axios.get(`deleteContact/${id}`)
+			.then(res =>{
+				if(res.data.status === "success"){
+					let newArrayContact = [...this.state.contactList];
+					let index = newArrayContact.findIndex(item => item._id === id);
+					if(index !== -1){
+						newArrayContact.splice(index,1);
+						this.setState({contactList: newArrayContact});
+					}
+				}
+				else{
+					// error
+				}
+			})
+	};
 	render() {
 		return (
 			<div>
@@ -164,13 +179,13 @@ class DashBoard extends React.Component {
 				</section>
 				{this.state.contactList.map((item) => (
 					<Contact
-						key={item.id}
+						key={item._id}
 						{...item}
 						updateContactList={this.updateContactList}
 						deleteContactList={this.deleteContactList}
 					/>
 				))}
-				<SendEmail />
+				{/* <SendEmail /> */}
 			</div>
 		);
 	}

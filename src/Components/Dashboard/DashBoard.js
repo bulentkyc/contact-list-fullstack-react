@@ -4,7 +4,7 @@ import Contact from './Contact/Contact';
 import axios from 'axios';
 // import DefaultImg from '../../assets/img/av.default.png';
 import SendEmail from './SendEmail/SendEmail';
-import UpdateContact from "./UpdateContact/UpdateContact";
+import UpdateContact from './UpdateContact/UpdateContact';
 
 class DashBoard extends React.Component {
 	state = {
@@ -144,41 +144,45 @@ class DashBoard extends React.Component {
 			e.target.reset();
 		}
 	};
-	showUpdateContact = (obj) =>{
-		this.setState({updatedObj:{...obj} ,showUpdateContact: true , blackBg: true})
-	}
+	showUpdateContact = (obj) => {
+		this.setState({ updatedObj: { ...obj }, showUpdateContact: true, blackBg: true });
+	};
 	updateContactList = () => {};
 	deleteContactList = (id) => {
-		axios.get(`deleteContact/${id}`)
-			.then(res =>{
-				if(res.data.status === "success"){
-					let newArrayContact = [...this.state.contactList];
-					let index = newArrayContact.findIndex(item => item._id === id);
-					if(index !== -1){
-						newArrayContact.splice(index,1);
-						this.setState({contactList: newArrayContact});
-					}
+		axios.get(`deleteContact/${id}`).then((res) => {
+			if (res.data.status === 'success') {
+				let newArrayContact = [ ...this.state.contactList ];
+				let index = newArrayContact.findIndex((item) => item._id === id);
+				if (index !== -1) {
+					newArrayContact.splice(index, 1);
+					this.setState({ contactList: newArrayContact });
 				}
-				else{
-					// error
-				}
-			})
+			} else {
+				// error
+			}
+		});
 	};
-	updateContactState = (obj)=>{
-		let newContactArray = [...this.state.contactList];
+	updateContactState = (obj) => {
+		let newContactArray = [ ...this.state.contactList ];
 		console.log(obj.id);
-		const index = newContactArray.findIndex(item => item._id === obj.id);
-		if(index !== -1){
+		const index = newContactArray.findIndex((item) => item._id === obj.id);
+		if (index !== -1) {
 			newContactArray[index] = obj;
-			this.setState({contactList: newContactArray}, ()=>{this.blackBg()});
+			this.setState({ contactList: newContactArray }, () => {
+				this.blackBg();
+			});
 		}
-	}
-	sendEmail = () => {
-		this.setState({ sendEmailOpen: true , blackBg: true});
 	};
-	blackBg = () =>{
-		this.setState({blackBg: false, sendEmailOpen: false, showUpdateContact: false})
-	}
+	sendEmail = (obj) => {
+		this.setState({ sendEmailOpen: true, blackBg: true });
+		axios.post('/sendMail', { ...obj }).then((res) => {
+			console.log(res);
+			this.blackBg();
+		});
+	};
+	blackBg = () => {
+		this.setState({ blackBg: false, sendEmailOpen: false, showUpdateContact: false });
+	};
 	render() {
 		return (
 			<div>
@@ -210,8 +214,10 @@ class DashBoard extends React.Component {
 					/>
 				))}
 
-				{this.state.sendEmailOpen ? <SendEmail /> : null}
-				{this.state.showUpdateContact ? <UpdateContact updateContactState={this.updateContactState} {...this.state.updatedObj} /> : null}
+				{this.state.sendEmailOpen ? <SendEmail SendEmail={this.sendEmail} /> : null}
+				{this.state.showUpdateContact ? (
+					<UpdateContact updateContactState={this.updateContactState} {...this.state.updatedObj} />
+				) : null}
 				{this.state.blackBg ? <div className={classes.blackBg} onClick={this.blackBg} /> : null}
 			</div>
 		);

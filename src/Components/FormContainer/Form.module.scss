@@ -38,7 +38,9 @@
 			margin: 8px;
 			font-size: 16px;
 			border: 1px solid $gray;
-			border-radius: 25px;
+			&:focus {
+				outline: none;
+			}
 			&[type='submit'] {
 				width: 40%;
 				margin: 8px auto;

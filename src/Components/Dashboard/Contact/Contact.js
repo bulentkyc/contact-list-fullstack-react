@@ -2,6 +2,12 @@ import React from 'react';
 import classes from './Contact.module.scss';
 
 const Contact = (props) => {
+	let obj = {
+		id: props._id,
+		name: props.name,
+		email: props.email,
+		avatar: props.avatar
+	}
 	return (
 		<section className={classes.contactList}>
 			<ul>
@@ -10,7 +16,7 @@ const Contact = (props) => {
 				</li>
 				<li>{props.name}</li>
 				<li>{props.email}</li>
-				<li onClick={props.updateContactList}>
+				<li onClick={()=>props.showUpdateContact(obj)}>
 					<img
 						className={classes.iconImg}
 						src={require('../../../assets/img/user-edit-solid.svg')}

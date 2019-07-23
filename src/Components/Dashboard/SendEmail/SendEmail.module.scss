@@ -2,8 +2,8 @@
 @import '../../FormContainer/Form.module.scss';
 
 .containerForm {
-	position: fixed;
-	top: 0;
+	position: absolute;
+	top: 7%;
 	left: 50%;
 	transform: translateX(-50%);
 	background-color: $white;

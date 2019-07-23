@@ -73,6 +73,24 @@ class DashBoard extends React.Component {
 		if (this.validation(obj)) {
 			if (this.state.selectedFile === null) {
 				obj.avatar = 'av.default.png';
+				axios
+				.post('/newContact', { ...obj })
+				.then((res) => {
+					console.log(res);
+					const newContact = res.data.newContactData;
+					let contactList = [ ...this.state.contactList ];
+					contactList.push(newContact);
+					if (res.data.status === 'success') {
+						this.setState({ selectedFile: null, contactList: contactList, failed: false, errors: [] });
+					} else {
+						errors = [ ...res.data.errors ];
+						this.setState({ failed: true, errors });
+					}
+				})
+				.catch((err) => {
+					errors.push({ msg: 'There Was a problem with server, Please try again later' });
+					this.setState({ selectedFile: null, errors });
+				});
 			} else {
 				const data = new FormData();
 				data.append('file', this.state.selectedFile);
@@ -119,24 +137,7 @@ class DashBoard extends React.Component {
 						}
 					});
 			}
-			axios
-				.post('/newContact', { ...obj })
-				.then((res) => {
-					console.log(res);
-					const newContact = res.data.newContactData;
-					let contactList = [ ...this.state.contactList ];
-					contactList.push(newContact);
-					if (res.data.status === 'success') {
-						this.setState({ selectedFile: null, contactList: contactList, failed: false, errors: [] });
-					} else {
-						errors = [ ...res.data.errors ];
-						this.setState({ failed: true, errors });
-					}
-				})
-				.catch((err) => {
-					errors.push({ msg: 'There Was a problem with server, Please try again later' });
-					this.setState({ selectedFile: null, errors });
-				});
+			
 			e.target.reset();
 		}
 	};
@@ -158,7 +159,7 @@ class DashBoard extends React.Component {
 			})
 	};
 	sendEmail = () => {
-		this.setState({ sendEmail: !this.state.sendEmailOpen });
+		this.setState({ sendEmailOpen: !this.state.sendEmailOpen });
 	};
 	render() {
 		return (

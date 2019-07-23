@@ -3,10 +3,11 @@
 
 .containerForm {
 	position: fixed;
-	top: 5%;
+	top: 0;
 	left: 50%;
 	transform: translateX(-50%);
 	background-color: $white;
+	z-index: 9;
 	h1 {
 		font-size: 25px;
 		img {

@@ -11,14 +11,15 @@ class DashBoard extends React.Component {
 		contactList: [],
 		selectedFile: null,
 		failed: false,
-		errors: []
+		errors: [],
+		sendEmailOpen: false
 	};
 	nameRef = React.createRef();
 	emailRef = React.createRef();
 	componentDidMount() {
 		console.log(sessionStorage.getItem('loginStatus'));
 		if (sessionStorage.getItem('loginStatus') !== 'true') {
-			this.props.history.push('/login');
+			// this.props.history.push('/login');
 		} else {
 			this.setState({ userData: JSON.parse(sessionStorage.getItem('state')) }, () => {
 				if (this.state.userData !== {}) {
@@ -119,28 +120,31 @@ class DashBoard extends React.Component {
 					});
 			}
 			axios
-			.post('/newContact', {...obj} )
-			.then((res) => {
-				console.log(res);
-				const newContact= res.data.newContactData
-				let contactList = [...this.state.contactList];
-				contactList.push(newContact);
-				if (res.data.status === 'success') {
-					this.setState({selectedFile: null,contactList: contactList, failed : false, errors: []});
-				} else {
-					errors = [ ...res.data.errors];
-					this.setState({ failed: true, errors });
-				}
-			})
-			.catch((err) => {
-				errors.push({ msg: 'There Was a problem with server, Please try again later' })
-				this.setState({selectedFile: null, errors });
-			});
+				.post('/newContact', { ...obj })
+				.then((res) => {
+					console.log(res);
+					const newContact = res.data.newContactData;
+					let contactList = [ ...this.state.contactList ];
+					contactList.push(newContact);
+					if (res.data.status === 'success') {
+						this.setState({ selectedFile: null, contactList: contactList, failed: false, errors: [] });
+					} else {
+						errors = [ ...res.data.errors ];
+						this.setState({ failed: true, errors });
+					}
+				})
+				.catch((err) => {
+					errors.push({ msg: 'There Was a problem with server, Please try again later' });
+					this.setState({ selectedFile: null, errors });
+				});
 			e.target.reset();
 		}
 	};
 	updateContactList = () => {};
 	deleteContactList = () => {};
+	sendEmail = () => {
+		this.setState({ sendEmail: !this.state.sendEmailOpen });
+	};
 	render() {
 		return (
 			<div>
@@ -167,10 +171,13 @@ class DashBoard extends React.Component {
 						key={item.id}
 						{...item}
 						updateContactList={this.updateContactList}
+						sendEmail={this.sendEmail}
 						deleteContactList={this.deleteContactList}
 					/>
 				))}
-				<SendEmail />
+
+				{this.state.sendEmailOpen ? <SendEmail /> : null}
+				{this.state.sendEmailOpen ? <div className={classes.blackBg} onClick={this.sendEmail} /> : null}
 			</div>
 		);
 	}

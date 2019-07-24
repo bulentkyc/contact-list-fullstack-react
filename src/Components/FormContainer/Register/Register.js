@@ -7,11 +7,11 @@ class Register extends React.Component {
 		failed: false,
 		errors: []
 	};
-	componentDidMount(){
-        console.log(sessionStorage.getItem('loginStatus'));
+	componentDidMount() {
+		console.log(sessionStorage.getItem('loginStatus'));
 
-		if(sessionStorage.getItem('loginStatus') === "true"){
-			this.props.history.push('/dashboard')
+		if (sessionStorage.getItem('loginStatus') === 'true') {
+			this.props.history.push('/dashboard');
 		}
 	}
 	nameRef = React.createRef();
@@ -44,33 +44,35 @@ class Register extends React.Component {
 	addNewUser = (e) => {
 		e.preventDefault();
 		let obj = {
-			name : this.nameRef.current.value,
-			email : this.emailRef.current.value,
-			password : this.passwordRef.current.value,
-			password2 : this.passwordConfirmRef.current.value
-		}
-		if(this.validation(obj)){
-			axios.post('/newUser',{...obj})
-			  .then(response =>{
-				  console.log(response)
-				if(response.data.status === "success"){
-					this.setState({failed : false});
-					this.props.history.push('/login')
-					// this.props.router.push({
-					// 	pathname: "/login",
-					// 	logUser: {
-					// 		...obj
-					// 	}
-					// })
-				}else{
-					this.setState({failed : true});
-					this.passwordRef.current.value = "";
-					this.passwordConfirmRef.current.value = "";
-					this.setState({errors: response.data.errors});
-				}
-				}).catch( err =>{
-					this.setState({errors: [{msg: "There was a problem with server, Please try again later."}]});
+			name: this.nameRef.current.value,
+			email: this.emailRef.current.value,
+			password: this.passwordRef.current.value,
+			password2: this.passwordConfirmRef.current.value
+		};
+		if (this.validation(obj)) {
+			axios
+				.post('/newUser', { ...obj })
+				.then((response) => {
+					console.log(response);
+					if (response.data.status === 'success') {
+						this.setState({ failed: false });
+						this.props.history.push('/login');
+						// this.props.router.push({
+						// 	pathname: "/login",
+						// 	logUser: {
+						// 		...obj
+						// 	}
+						// })
+					} else {
+						this.setState({ failed: true });
+						this.passwordRef.current.value = '';
+						this.passwordConfirmRef.current.value = '';
+						this.setState({ errors: response.data.errors });
+					}
 				})
+				.catch((err) => {
+					this.setState({ errors: [ { msg: 'There was a problem with server, Please try again later.' } ] });
+				});
 		} else {
 			this.passwordRef.current.value = '';
 			this.passwordConfirmRef.current.value = '';
@@ -89,12 +91,16 @@ class Register extends React.Component {
 				))}
 				<form onSubmit={this.addNewUser}>
 					<label>Name</label>
+					<img className={Classes.inputImg} src={require('../../../assets/img/name.svg')} alt />
 					<input type="text" placeholder="Enter Name" ref={this.nameRef} />
 					<label>Email</label>
+					<img className={Classes.inputImg} src={require('../../../assets/img/email-img.svg')} alt />
 					<input type="text" placeholder="Enter Email" ref={this.emailRef} />
 					<label>Password</label>
+					<img className={Classes.inputImg} src={require('../../../assets/img/password.svg')} alt />
 					<input type="password" placeholder="Create Password" ref={this.passwordRef} />
 					<label>Confirm Password</label>
+					<img className={Classes.inputImg} src={require('../../../assets/img/password.svg')} alt />
 					<input type="password" placeholder="Confirm Password" ref={this.passwordConfirmRef} />
 					<input type="submit" value="Register" />
 				</form>

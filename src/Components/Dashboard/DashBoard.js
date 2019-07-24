@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './DashBoard.module.scss';
+import Classes from './DashBoard.module.scss';
 import Contact from './Contact/Contact';
 import axios from 'axios';
 // import DefaultImg from '../../assets/img/av.default.png';
@@ -186,19 +186,21 @@ class DashBoard extends React.Component {
 	render() {
 		return (
 			<div>
-				<section className={classes.containerForm}>
+				<section className={Classes.containerForm}>
 					<img
-						className={classes.portfolioImg}
+						className={Classes.portfolioImg}
 						src={require('../../assets/img/av.default.png')}
 						alt="portfolio"
 					/>
 					{this.state.errors.map((error, index) => (
-						<p className={classes.error} key={index}>
+						<p className={Classes.error} key={index}>
 							{error.msg}
 						</p>
 					))}
 					<form onSubmit={this.addContact}>
+						<img className={Classes.inputImg} src={require('../../assets/img/name.svg')} alt />
 						<input type="text" name="name" placeholder="Please enter contact name" ref={this.nameRef} />
+						<img className={Classes.inputImg} src={require('../../assets/img/email-img.svg')} alt />
 						<input type="text" name="email" placeholder="Please enter contact email" ref={this.emailRef} />
 						<input type="file" name="file" onChange={this.uploadImage} />
 						<input type="submit" value="Submit" />
@@ -218,7 +220,7 @@ class DashBoard extends React.Component {
 				{this.state.showUpdateContact ? (
 					<UpdateContact updateContactState={this.updateContactState} {...this.state.updatedObj} />
 				) : null}
-				{this.state.blackBg ? <div className={classes.blackBg} onClick={this.blackBg} /> : null}
+				{this.state.blackBg ? <div className={Classes.blackBg} onClick={this.blackBg} /> : null}
 			</div>
 		);
 	}

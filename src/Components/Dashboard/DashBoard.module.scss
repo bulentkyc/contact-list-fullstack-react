@@ -23,10 +23,12 @@ input[type='file'] {
 		content: 'Select Your Photo';
 		background-color: $white;
 		position: absolute;
-		left: 0;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
 		width: 100%;
 		text-align: center;
-		padding: 1%;
+		padding: 15px;
 	}
 }
 .blackBg {

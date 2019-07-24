@@ -8,11 +8,11 @@ class Login extends React.Component {
 		failed: false,
 		errors: []
 	};
-	componentDidMount(){
-        console.log(sessionStorage.getItem('loginStatus'));
+	componentDidMount() {
+		console.log(sessionStorage.getItem('loginStatus'));
 
-		if(sessionStorage.getItem('loginStatus') === "true"){
-			this.props.history.push('/dashboard')
+		if (sessionStorage.getItem('loginStatus') === 'true') {
+			this.props.history.push('/dashboard');
 		}
 	}
 	emailRef = React.createRef();
@@ -45,19 +45,19 @@ class Login extends React.Component {
 				.post('/loginUser', { ...obj })
 				.then((response) => {
 					const userData = {
-						id : response.data.id,
-						name : response.data.name,
-						email : response.data.email,
-						date : response.data.date,
-					}
+						id: response.data.id,
+						name: response.data.name,
+						email: response.data.email,
+						date: response.data.date
+					};
 					console.log(userData);
 
 					if (response.data.status === 'success') {
-						this.setState({failed : false});
-						sessionStorage.setItem("loginStatus", "true");
-						sessionStorage.setItem("state", JSON.stringify(userData))
-						this.props.updateLoginState("true");
-						this.props.history.push('/dashboard')
+						this.setState({ failed: false });
+						sessionStorage.setItem('loginStatus', 'true');
+						sessionStorage.setItem('state', JSON.stringify(userData));
+						this.props.updateLoginState('true');
+						this.props.history.push('/dashboard');
 					} else {
 						this.setState({ failed: true });
 						this.passwordRef.current.value = '';
@@ -84,8 +84,9 @@ class Login extends React.Component {
 				))}
 				<form onSubmit={this.userLogged}>
 					<label>Email</label>
-					<input type="text" placeholder="Enter Email" ref={this.emailRef} />
-					<label>Password</label>
+					<img className={Classes.inputImg} src={require('../../../assets/img/email-img.svg')} alt />
+					<input type="text" placeholder="Enter Email" ref={this.emailRef} /> <label>Password</label>
+					<img className={Classes.inputImg} src={require('../../../assets/img/password.svg')} alt />
 					<input type="password" placeholder="Create Password" ref={this.passwordRef} />
 					<input type="submit" value="Login" />
 				</form>

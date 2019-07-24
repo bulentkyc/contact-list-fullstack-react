@@ -3,14 +3,15 @@
 .containerForm {
 	color: $black;
 	font-size: 18px;
-	width: 35%;
+	width: 30%;
 	min-width: 500px;
 	margin: 5% auto;
 	padding: 2%;
-	box-shadow: 0 0 5px $gray;
-	border-radius: 25px;
+	border-radius: 5px;
 	font-family: Arial, Helvetica, sans-serif;
 	text-align: center;
+	background: linear-gradient(to bottom, #f2fcfe, #1c92d2);
+
 	h1 {
 		display: flex;
 		justify-content: center;
@@ -20,6 +21,7 @@
 		img {
 			width: 60px;
 			padding: 8px;
+			color: $black;
 		}
 	}
 	.error {
@@ -34,32 +36,41 @@
 		flex-direction: column;
 		padding: 5%;
 		input {
-			padding: 15px;
+			padding: 15px 15px 15px 60px;
 			margin: 8px;
 			font-size: 16px;
-			border: 1px solid $gray;
+			border: none;
+			border-radius: 5px;
 			&:focus {
 				outline: none;
 			}
 			&[type='submit'] {
-				width: 40%;
-				margin: 8px auto;
-				background-color: $redOrange;
-				color: $white;
+				width: 25%;
+				margin: 10px auto;
+				background-color: $white;
+				color: $black;
 				border: none;
 				font-size: 18px;
+				padding-left: 15px;
 				cursor: pointer;
 			}
 		}
 		label {
 			padding: 8px;
+			display: none;
+		}
+		.inputImg {
+			position: relative;
+			top: 44px;
+			left: 25px;
+			width: 22px;
 		}
 	}
 	p {
 		text-align: center;
 		margin: 0;
 		a {
-			color: $redOrange;
+			color: $white;
 			text-decoration: none;
 		}
 	}

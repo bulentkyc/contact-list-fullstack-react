@@ -7,7 +7,7 @@ const Contact = (props) => {
 		name: props.name,
 		email: props.email,
 		avatar: props.avatar
-	}
+	};
 	return (
 		<section className={classes.contactList}>
 			<ul>
@@ -16,7 +16,7 @@ const Contact = (props) => {
 				</li>
 				<li>{props.name}</li>
 				<li>{props.email}</li>
-				<li onClick={()=>props.showUpdateContact(obj)}>
+				<li onClick={() => props.showUpdateContact(obj)}>
 					<img
 						className={classes.iconImg}
 						src={require('../../../assets/img/user-edit-solid.svg')}
@@ -26,14 +26,14 @@ const Contact = (props) => {
 				<li onClick={props.sendEmail}>
 					<img
 						className={classes.iconImg}
-						src={require('../../../assets/img/user-edit-solid.svg')}
+						src={require('../../../assets/img/sendEmail.svg')}
 						alt="edit"
 					/>{' '}
 				</li>
-				<li onClick={()=>props.deleteContactList(props._id)}>
+				<li onClick={() => props.deleteContactList(props._id)}>
 					<img
 						className={classes.iconImg}
-						src={require('../../../assets/img/times-solid.svg')}
+						src={require('../../../assets/img/delete-user.svg')}
 						alt="remove"
 					/>{' '}
 				</li>
